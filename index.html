@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+ <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+ <title>С Днём Рождения, сестрёнка!</title>
+ <script src="https://cdn.tailwindcss.com"></script>
+<style>
+ body {
+ background: linear-gradient(to bottom, #fce7f3, #fdf2f8, #fef3c7);
+ overflow-x: hidden;
+ }
+ @keyframes fadeIn {
+ from {opacity: 0; transform: scale(0.95);}
+ to  {opacity: 1; transform: scale(1);}
+ }
+ @keyframes float {
+ 0%, 100% { transform: translateY(0); }
+ 50% { transform: translateY(-10px); }
+ }
+ .fade-in { animation: fadeIn 1s ease-out forwards; }
+ .float { animation: float 3s ease-in-out infinite; }
+.heart {
+ position: absolute;
+ width: 20px;
+ height: 20px;
+ background-color: #f472b6;
+ transform: rotate(45deg);
+ animation: float 6s ease-in-out infinite;
+ opacity: 0.6;
+ }
+.heart::before, .heart::after {
+ content: '';
+ position: absolute;
+ width: 20px;
+ height: 20px;
+ background-color: #f472b6;
+ border-radius: 50%;
+ }
+ .heart::before { top: -10px; left: 0; }
+ .heart::after { left: -10px; top: 0; }
+ .firework {
+ position: absolute;
+ width: 5px;
+ height: 5px;
+ background: gold;
+ border-radius: 50%;
+ animation: explode 1s ease-out forwards;
+ }
+ @keyframes explode {
+ 0% { transform: scale(1); opacity: 1; }
+ 100% { transform: scale(6); opacity: 0; }
+ }
+ </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center relative">
+ <div class="heart" style="top: 10%; left: 20%; animation-delay: 1s;"></div>
+ <div class="heart" style="top: 30%; left: 70%; animation-delay: 2s;"></div>
+ <div class="heart" style="top: 60%; left: 40%; animation-delay: 3s;"></div>
+
+ <div id="intro" class="text-center space-y-4 z-10">
+ <h1 class="text-3xl md:text-4xl font-semibold tracking-wide text-purple-700 animate-bounce">Нажми, чтобы открыть открытку</h1>
+ <button id="openBtn" class="px-8 py-4 rounded-full bg-pink-500 hover:bg-pink-600 text-white text-xl shadow-lg transition focus:outline-none focus:ring-4 focus:ring-pink-300">Открыть</button>
+ </div>
+
+<div id="card" class="hidden max-w-2xl bg-white/90 backdrop-blur-lg rounded-3xl shadow-2xl p-10 fade-in text-center z-10">
+ <h2 class="text-4xl md:text-5xl font-bold text-purple-800 mb-4 animate-pulse">С Днём Рождения, сестрёнка!</h2>
+ <p class="text-xl md:text-2xl text-purple-600 mb-6">Тебе 11 лет!</p>
+<p class="text-lg leading-relaxed text-gray-800 mb-6">
+ Сестрёнка милая моя,<br />
+ Ты — как улыбка солнца дня!<br />
+ Пусть счастьем светятся глаза,<br />
+ И сбудется мечта твоя!<br /><br />
+ Пусть доброта цветёт, как сад,<br />
+ Пусть знания легко придут,<br />
+ Пусть каждый день и каждый час<br />
+ Тебе лишь радость принесут!
+ </p>
+ <p class="italic text-right text-purple-700">С любовью, от брата Азизбека</p>
+ </div>
+
+ <script>
+ const btn = document.getElementById('openBtn');
+ const intro = document.getElementById('intro');
+const card = document.getElementById('card');
+
+// Создаём аудио объект
+ const audio = new Audio('https://cdn.pixabay.com/download/audio/2022/03/15/audio_d4d48da0a1.mp3?filename=happy-birthday-122121.mp3');
+ audio.loop = true;
+
+btn.addEventListener('click', () => {
+ intro.classList.add('hidden');
+ card.classList.remove('hidden');
+ launchFireworks();
+
+ // Запускаем аудио после клика
+ audio.play().catch(e => {
+ console.log('Ошибка воспроизведения аудио:', e);
+ });
+});
+
+ function launchFireworks() {
+ for (let i = 0; i < 20; i++) {
+ const spark = document.createElement('div');
+ spark.className = 'firework';
+ spark.style.left = Math.random() * window.innerWidth + 'px';
+ spark.style.top = Math.random() * window.innerHeight + 'px';
+ document.body.appendChild(spark);
+
+setTimeout(() => spark.remove(), 1000);
+ }
+ }
+ </script>
+</body>
+</html>
